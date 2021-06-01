@@ -1,5 +1,6 @@
 package br.com.desafiospring.desafiospring.controller;
 
+import br.com.desafiospring.desafiospring.dto.FollowerDto;
 import br.com.desafiospring.desafiospring.model.Type;
 import br.com.desafiospring.desafiospring.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,9 @@ public class UserController {
        return this.userService.followUser(userId, userIdToFollow);
     }
 
-    @GetMapping("/{userId}/followers/count/")
-    public ResponseEntity countFollowersSeller(@PathVariable Integer userId){
-        return this.userService.countFollowers(userId, Type.SELLER);
+    @GetMapping("/{userId}/followers/count")
+    public ResponseEntity<FollowerDto> countFollowers(@PathVariable Integer userId){
+        FollowerDto followerDto =  this.userService.countFollowers(userId);
+        return ResponseEntity.ok().body(followerDto);
     }
 }

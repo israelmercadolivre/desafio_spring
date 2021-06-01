@@ -1,5 +1,6 @@
 package br.com.desafiospring.desafiospring.service;
 
+import br.com.desafiospring.desafiospring.dto.FollowerDto;
 import br.com.desafiospring.desafiospring.exception.UserDoesNotExistingException;
 import br.com.desafiospring.desafiospring.model.Client;
 import br.com.desafiospring.desafiospring.model.Seller;
@@ -45,8 +46,9 @@ public class UserService {
 
 
 
-    public ResponseEntity countFollowers(Integer userId, Type type) {
-        return null;
+    public FollowerDto countFollowers(Integer userId) {
+        Optional<Seller> sellerOptional = this.findByIdAndType(userId, Type.SELLER);
+        return this.sellerToFollowerDto(sellerOptional.get());
     }
 
     private Optional findByIdAndType(Integer id, Type type) {
@@ -55,5 +57,14 @@ public class UserService {
             throw new UserDoesNotExistingException(String.format(USER_NOTFOUND, id, type.name()));
         }
         return clientOptional;
+    }
+
+    private FollowerDto sellerToFollowerDto(Seller seller){
+        FollowerDto followerDto = new FollowerDto();
+        followerDto.setUserId(seller.getId());
+        followerDto.setUserName(seller.getName());
+        followerDto.setFollowers_count(seller.getFollowers().size());
+
+        return followerDto;
     }
 }
