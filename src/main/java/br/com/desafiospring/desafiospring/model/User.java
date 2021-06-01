@@ -11,7 +11,8 @@ import javax.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Integer id;
     private String name;
-
+    @Enumerated(EnumType.STRING)
+    private Type type;
 }

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Integer id;
     private LocalDateTime date;
     @ManyToOne
     private Seller seller;

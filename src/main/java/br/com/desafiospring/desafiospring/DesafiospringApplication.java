@@ -1,5 +1,7 @@
 package br.com.desafiospring.desafiospring;
 
+import br.com.desafiospring.desafiospring.model.Client;
+import br.com.desafiospring.desafiospring.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

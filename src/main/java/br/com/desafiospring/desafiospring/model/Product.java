@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Integer id;
     @ManyToOne
     private Seller seller;
     private String name;
@@ -20,6 +20,6 @@ public class Product {
     private String notes;
     private String category;
     private BigDecimal price;
-    private boolean hasPromo;
+    private Boolean hasPromo;
     private BigDecimal discount;
 }

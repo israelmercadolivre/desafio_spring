@@ -3,6 +3,7 @@ package br.com.desafiospring.desafiospring.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,4 +19,13 @@ public class Seller extends User {
     private List<Product> products;
     @OneToMany(mappedBy = "seller")
     private List<Post> posts;
+
+    public void addFollower(Client follower) {
+        if (this.followers == null) this.followers = new ArrayList<>();
+        this.followers.add(follower);
+    }
+
+    public Seller() {
+        this.setType(Type.SELLER);
+    }
 }
