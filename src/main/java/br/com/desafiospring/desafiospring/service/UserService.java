@@ -5,6 +5,8 @@ import br.com.desafiospring.desafiospring.dto.followed.FollowedListDto;
 import br.com.desafiospring.desafiospring.dto.follower.FollowerCountDto;
 import br.com.desafiospring.desafiospring.dto.follower.FollowerDto;
 import br.com.desafiospring.desafiospring.dto.follower.FollowerListDto;
+import br.com.desafiospring.desafiospring.exception.InvalidFollowUserException;
+import br.com.desafiospring.desafiospring.exception.UserAlreadyFollowSellerException;
 import br.com.desafiospring.desafiospring.exception.UserDoesNotExistingException;
 import br.com.desafiospring.desafiospring.model.user.*;
 import br.com.desafiospring.desafiospring.repository.user.UserRepository;
@@ -19,6 +21,7 @@ public class UserService {
     private SellerService sellerService;
     private SellerFollowService sellerFollowService;
     private static final String USER_NOTFOUND = "User [%s] not found";
+    private static final String INVALID_FOLLOW_USER = "User [%s] can not follow User [%s]";
 
     public UserService(UserRepository userRepository, SellerService sellerService, SellerFollowService sellerFollowService) {
         this.userRepository = userRepository;
@@ -28,7 +31,9 @@ public class UserService {
 
 
     public ResponseEntity followUser(Integer userId, Integer userIdToFollow) {
+        this.verifyUserFollow(userId, userIdToFollow);
         this.sellerFollowService.verifyExistSellerFollow(userId, userIdToFollow);
+
         User user = this.findById(userId);
         Seller seller = this.sellerService.findById(userIdToFollow);
 
@@ -38,6 +43,12 @@ public class UserService {
 
         this.sellerFollowService.save(sellerFollow);
         return ResponseEntity.ok().build();
+    }
+
+    private void verifyUserFollow(Integer userId, Integer userIdToFollow) {
+        if(userId == userIdToFollow){
+            throw new InvalidFollowUserException(String.format(INVALID_FOLLOW_USER, userId, userIdToFollow));
+        }
     }
 
 
