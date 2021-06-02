@@ -1,7 +1,10 @@
 package br.com.desafiospring.desafiospring.service;
 
-import br.com.desafiospring.desafiospring.dto.FollowerCountDto;
-import br.com.desafiospring.desafiospring.dto.FollowerListDto;
+import br.com.desafiospring.desafiospring.dto.followed.FollowedDto;
+import br.com.desafiospring.desafiospring.dto.followed.FollowedListDto;
+import br.com.desafiospring.desafiospring.dto.follower.FollowerCountDto;
+import br.com.desafiospring.desafiospring.dto.follower.FollowerDto;
+import br.com.desafiospring.desafiospring.dto.follower.FollowerListDto;
 import br.com.desafiospring.desafiospring.exception.UserDoesNotExistingException;
 import br.com.desafiospring.desafiospring.model.user.*;
 import br.com.desafiospring.desafiospring.repository.user.UserRepository;
@@ -48,6 +51,12 @@ public class UserService {
         return this.sellerService.sellerToFollowerListDto(seller);
     }
 
+    public FollowedListDto listFollowed(Integer userId){
+        User user = this.findById(userId);
+        return this.userToFollowedListDto(user);
+    }
+
+
     private Optional findByIdAndType(Integer id, Type type) {
         Optional clientOptional = this.userRepository.findByIdAndType(id, type);
         if (clientOptional.isEmpty()) {
@@ -61,4 +70,17 @@ public class UserService {
                 .orElseThrow(
                         () -> new UserDoesNotExistingException(String.format(USER_NOTFOUND, id)));
     }
+
+    private FollowedListDto userToFollowedListDto(User user) {
+        FollowedListDto followedListDto = new FollowedListDto();
+        followedListDto.setUserId(user.getId());
+        followedListDto.setUserName(user.getName());
+        user.getFollowed()
+                .stream()
+                .map(SellerFollow::getSeller)
+                .forEach(seller -> followedListDto.setFollowed(new FollowedDto(seller.getId(), seller.getName())));
+
+        return followedListDto;
+    }
+
 }

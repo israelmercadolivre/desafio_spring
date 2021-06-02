@@ -1,4 +1,4 @@
-package br.com.desafiospring.desafiospring.dto;
+package br.com.desafiospring.desafiospring.dto.follower;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
