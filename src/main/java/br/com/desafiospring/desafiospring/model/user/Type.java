@@ -1,4 +1,4 @@
-package br.com.desafiospring.desafiospring.model;
+package br.com.desafiospring.desafiospring.model.user;
 
 public enum Type {
     SELLER("SELLER"),

@@ -1,54 +1,45 @@
 package br.com.desafiospring.desafiospring.service;
 
-import br.com.desafiospring.desafiospring.dto.FollowerDto;
+import br.com.desafiospring.desafiospring.dto.FollowerCountDto;
 import br.com.desafiospring.desafiospring.exception.UserDoesNotExistingException;
-import br.com.desafiospring.desafiospring.model.Client;
-import br.com.desafiospring.desafiospring.model.Seller;
-import br.com.desafiospring.desafiospring.model.Type;
-import br.com.desafiospring.desafiospring.repository.UserRepository;
+import br.com.desafiospring.desafiospring.model.user.*;
+import br.com.desafiospring.desafiospring.repository.user.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 @Service
 public class UserService {
     private UserRepository userRepository;
-    private static final String USER_NOTFOUND = "User [%s] of type [%s] not found";
+    private SellerService sellerService;
+    private SellerFollowService sellerFollowService;
+    private static final String USER_NOTFOUND = "User [%s] not found";
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, SellerService sellerService, SellerFollowService sellerFollowService) {
         this.userRepository = userRepository;
+        this.sellerService = sellerService;
+        this.sellerFollowService = sellerFollowService;
     }
 
-    public void criaUser() {
-        Client client = new Client();
-        client.setName("Client1");
-        Seller seller = new Seller();
-        seller.setName("Seller1");
-        userRepository.save(seller);
-        userRepository.save(client);
-    }
 
     public ResponseEntity followUser(Integer userId, Integer userIdToFollow) {
-        Optional<Client> clientOptional = this.findByIdAndType(userId, Type.CLIENT);
-        Optional<Seller> sellerOptional = this.findByIdAndType(userIdToFollow, Type.SELLER);
+        this.sellerFollowService.verifyExistSellerFollow(userId, userIdToFollow);
+        User user = this.findById(userId);
+        Seller seller = this.sellerService.findById(userIdToFollow);
 
-        Seller seller = sellerOptional.get();
-        Client client = clientOptional.get();
+        SellerFollow sellerFollow = new SellerFollow();
+        sellerFollow.setSeller(seller);
+        sellerFollow.setUser(user);
 
-        seller.addFollower(client);
-        client.addSellers(seller);
-
-        this.userRepository.saveAll(Arrays.asList(seller, client));
+        this.sellerFollowService.save(sellerFollow);
         return ResponseEntity.ok().build();
     }
 
 
-
-    public FollowerDto countFollowers(Integer userId) {
-        Optional<Seller> sellerOptional = this.findByIdAndType(userId, Type.SELLER);
-        return this.sellerToFollowerDto(sellerOptional.get());
+    public FollowerCountDto countFollowers(Integer sellerId) {
+        Seller seller = this.sellerService.findById(sellerId);
+        return this.sellerService.sellerToFollowerDto(seller);
     }
 
     private Optional findByIdAndType(Integer id, Type type) {
@@ -59,12 +50,9 @@ public class UserService {
         return clientOptional;
     }
 
-    private FollowerDto sellerToFollowerDto(Seller seller){
-        FollowerDto followerDto = new FollowerDto();
-        followerDto.setUserId(seller.getId());
-        followerDto.setUserName(seller.getName());
-        followerDto.setFollowers_count(seller.getFollowers().size());
-
-        return followerDto;
+    private User findById(Integer id) {
+        return this.userRepository.findById(id)
+                .orElseThrow(
+                        () -> new UserDoesNotExistingException(String.format(USER_NOTFOUND, id)));
     }
 }
