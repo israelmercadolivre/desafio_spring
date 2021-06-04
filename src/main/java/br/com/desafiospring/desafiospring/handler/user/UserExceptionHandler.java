@@ -1,6 +1,10 @@
-package br.com.desafiospring.desafiospring.handler;
+package br.com.desafiospring.desafiospring.handler.user;
 
 import br.com.desafiospring.desafiospring.exception.*;
+import br.com.desafiospring.desafiospring.exception.user.InvalidFollowUserException;
+import br.com.desafiospring.desafiospring.exception.user.UserAlreadyFollowSellerException;
+import br.com.desafiospring.desafiospring.exception.user.UserDoesNotExistingException;
+import br.com.desafiospring.desafiospring.exception.user.UserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

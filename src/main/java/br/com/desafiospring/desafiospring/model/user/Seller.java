@@ -1,11 +1,9 @@
 package br.com.desafiospring.desafiospring.model.user;
 
 import br.com.desafiospring.desafiospring.model.post.Post;
-import br.com.desafiospring.desafiospring.model.product.Product;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 

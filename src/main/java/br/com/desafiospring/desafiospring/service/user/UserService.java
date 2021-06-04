@@ -1,13 +1,11 @@
-package br.com.desafiospring.desafiospring.service;
+package br.com.desafiospring.desafiospring.service.user;
 
 import br.com.desafiospring.desafiospring.dto.followed.FollowedDto;
 import br.com.desafiospring.desafiospring.dto.followed.FollowedListDto;
 import br.com.desafiospring.desafiospring.dto.follower.FollowerCountDto;
-import br.com.desafiospring.desafiospring.dto.follower.FollowerDto;
 import br.com.desafiospring.desafiospring.dto.follower.FollowerListDto;
-import br.com.desafiospring.desafiospring.exception.InvalidFollowUserException;
-import br.com.desafiospring.desafiospring.exception.UserAlreadyFollowSellerException;
-import br.com.desafiospring.desafiospring.exception.UserDoesNotExistingException;
+import br.com.desafiospring.desafiospring.exception.user.InvalidFollowUserException;
+import br.com.desafiospring.desafiospring.exception.user.UserDoesNotExistingException;
 import br.com.desafiospring.desafiospring.model.user.*;
 import br.com.desafiospring.desafiospring.repository.user.UserRepository;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package br.com.desafiospring.desafiospring.exception;
+package br.com.desafiospring.desafiospring.exception.user;
 
 public class UserException extends RuntimeException{
     public UserException(String message) {

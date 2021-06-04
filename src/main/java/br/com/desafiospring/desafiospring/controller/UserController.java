@@ -2,9 +2,8 @@ package br.com.desafiospring.desafiospring.controller;
 
 import br.com.desafiospring.desafiospring.dto.followed.FollowedListDto;
 import br.com.desafiospring.desafiospring.dto.follower.FollowerCountDto;
-import br.com.desafiospring.desafiospring.dto.follower.FollowerDto;
 import br.com.desafiospring.desafiospring.dto.follower.FollowerListDto;
-import br.com.desafiospring.desafiospring.service.UserService;
+import br.com.desafiospring.desafiospring.service.user.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

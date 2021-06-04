@@ -1,7 +1,6 @@
-package br.com.desafiospring.desafiospring.service;
+package br.com.desafiospring.desafiospring.service.user;
 
-import br.com.desafiospring.desafiospring.exception.UserAlreadyFollowSellerException;
-import br.com.desafiospring.desafiospring.exception.UserDoesNotExistingException;
+import br.com.desafiospring.desafiospring.exception.user.UserAlreadyFollowSellerException;
 import br.com.desafiospring.desafiospring.model.user.SellerFollow;
 import br.com.desafiospring.desafiospring.model.user.SellerFollowKey;
 import br.com.desafiospring.desafiospring.repository.user.SellerFollowRepository;
