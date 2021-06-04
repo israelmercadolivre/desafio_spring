@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -56,6 +57,7 @@ public class PostService {
 
         SellerPostsDto sellerPostsDto = new SellerPostsDto();
         sellerPostsDto.setUserId(userId);
+        postsDto.sort((dto1, dto2)-> dto2.getDate().compareTo(dto1.getDate()));
         sellerPostsDto.setPosts(postsDto);
 
         return ResponseEntity.ok().body(sellerPostsDto);
