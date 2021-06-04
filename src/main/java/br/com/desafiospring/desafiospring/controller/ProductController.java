@@ -31,4 +31,9 @@ public class ProductController {
        return this.postService.getListPostByUser(userId, order);
     }
 
+    //US0010
+    @PostMapping( "/newpromopost")
+    public ResponseEntity createPostPromo(@RequestBody PostDto postDto){
+        return this.productService.createProductPromo(postDto);
+    }
 }

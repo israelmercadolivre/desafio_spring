@@ -20,6 +20,8 @@ public class PostDto {
 
     private String category;
     private BigDecimal price;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean hasPromo;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private BigDecimal discount;
 }

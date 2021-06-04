@@ -8,8 +8,6 @@ import br.com.desafiospring.desafiospring.model.user.Seller;
 import br.com.desafiospring.desafiospring.service.user.SellerService;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-
 @Component
 public class PostMapper {
     private ProductMapper productMapper;
@@ -44,8 +42,8 @@ public class PostMapper {
         post.setSeller(seller);
         post.setCategory(dto.getCategory());
         post.setPrice(dto.getPrice());
-        post.setDiscount(dto.getDiscount() != null ? dto.getDiscount() : BigDecimal.ZERO);
-        post.setHasPromo(dto.getHasPromo() != null ? dto.getHasPromo() : false);
+        post.setDiscount(dto.getDiscount());
+        post.setHasPromo(dto.getHasPromo());
         return post;
     }
 }

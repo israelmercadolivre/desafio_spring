@@ -2,6 +2,7 @@ package br.com.desafiospring.desafiospring.service.post;
 
 import br.com.desafiospring.desafiospring.dto.post.PostDto;
 import br.com.desafiospring.desafiospring.dto.post.SellerPostsDto;
+import br.com.desafiospring.desafiospring.exception.post.InvalidValuesPostPromoException;
 import br.com.desafiospring.desafiospring.exception.post.PostAlreadyExistException;
 import br.com.desafiospring.desafiospring.mapper.post.PostMapper;
 import br.com.desafiospring.desafiospring.model.post.Post;
@@ -13,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -28,6 +28,8 @@ public class PostService {
     private PostMapper postMapper;
 
     private static final String POST_ALREADY_EXIST = "Post with [%s] already exist";
+    private static final String WITHOUT_PROMO = "Verify values on fields hasPromo and discount";
+
 
     public PostService(PostRepository postRepository, SellerService sellerService, PostMapper postMapper) {
         this.postRepository = postRepository;
@@ -51,7 +53,7 @@ public class PostService {
 
     public ResponseEntity<SellerPostsDto> getListPostByUser(Integer userId, String orderName) {
         Seller seller = this.sellerService.findById(userId);
-        List<Post> posts = getPostsTwoWeekAgo(seller);
+        List<Post> posts = getPostsTwoWeekAgo(seller.getPosts());
 
         List<PostDto> postsDto = new ArrayList<>();
         posts.stream().forEach(post -> postsDto.add(this.postMapper.postToPostDto(post)));
@@ -73,10 +75,10 @@ public class PostService {
         return ResponseEntity.ok().body(sellerPostsDto);
     }
 
-    private List<Post> getPostsTwoWeekAgo(Seller seller) {
+    private List<Post> getPostsTwoWeekAgo(List<Post> posts) {
         LocalDate twoWeekAgo = LocalDate.now().minusDays(14);
 
-        return seller.getPosts()
+        return posts
                 .stream()
                 .filter(post -> post.getDate().isAfter(twoWeekAgo))
                 .filter(post -> post.getDate().isBefore(LocalDate.now().plusDays(1)))
@@ -84,4 +86,9 @@ public class PostService {
     }
 
 
+    public void verifyExistPromo(PostDto postDto) {
+        if ((postDto.getHasPromo() == null || postDto.getDiscount() == null) ||
+                (!postDto.getHasPromo() || postDto.getDiscount().doubleValue() == 0)) throw new
+                InvalidValuesPostPromoException((WITHOUT_PROMO));
+    }
 }

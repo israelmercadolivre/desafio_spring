@@ -26,6 +26,12 @@ public class ProductService {
         this.mapper = mapper;
     }
 
+
+    public ResponseEntity createProductPromo(PostDto postDto) {
+        this.postService.verifyExistPromo(postDto);
+        return createProduct(postDto);
+    }
+
     public ResponseEntity createProduct(PostDto postDto) {
         this.verifyExistProduct(postDto.getDetail().getProduct_id());
         Post post = this.postService.createPostByDto(postDto);
