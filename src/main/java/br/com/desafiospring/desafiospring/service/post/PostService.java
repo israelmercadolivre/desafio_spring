@@ -7,6 +7,7 @@ import br.com.desafiospring.desafiospring.mapper.post.PostMapper;
 import br.com.desafiospring.desafiospring.model.post.Post;
 import br.com.desafiospring.desafiospring.model.user.Seller;
 import br.com.desafiospring.desafiospring.repository.post.PostRepository;
+import br.com.desafiospring.desafiospring.service.post.order.Order;
 import br.com.desafiospring.desafiospring.service.user.SellerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,7 @@ public class PostService {
         }
     }
 
-    public ResponseEntity<SellerPostsDto> getListPostByUser(Integer userId) {
+    public ResponseEntity<SellerPostsDto> getListPostByUser(Integer userId, String orderName) {
         Seller seller = this.sellerService.findById(userId);
         List<Post> posts = getPostsTwoWeekAgo(seller);
 
@@ -57,9 +58,18 @@ public class PostService {
 
         SellerPostsDto sellerPostsDto = new SellerPostsDto();
         sellerPostsDto.setUserId(userId);
-        postsDto.sort((dto1, dto2)-> dto2.getDate().compareTo(dto1.getDate()));
         sellerPostsDto.setPosts(postsDto);
 
+        Comparator comparator;
+
+        if (orderName != null){
+            Order order = Order.getOrderByName(orderName);
+            comparator = order.getComparator();
+        } else {
+            comparator = Order.DATE_DESC.getComparator();
+        }
+
+        sellerPostsDto.getPosts().sort(comparator);
         return ResponseEntity.ok().body(sellerPostsDto);
     }
 

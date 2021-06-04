@@ -6,6 +6,8 @@ import br.com.desafiospring.desafiospring.service.product.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -25,8 +27,8 @@ public class ProductController {
 
     //US006
     @GetMapping("/followed/{userId}/list")
-    public ResponseEntity getListPostByUser(@PathVariable Integer userId){
-       return this.postService.getListPostByUser(userId);
+    public ResponseEntity getListPostByUser(@PathVariable Integer userId, @PathParam("order") String order){
+       return this.postService.getListPostByUser(userId, order);
     }
 
 }
