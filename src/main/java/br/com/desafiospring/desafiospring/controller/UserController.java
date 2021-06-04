@@ -48,4 +48,10 @@ public class UserController {
         FollowedListDto followedListDto =  this.userService.listFollowed(userId);
         return ResponseEntity.ok().body(followedListDto);
     }
+
+    //US 007
+    @PostMapping("/{userId}/unfollow/{userIdToUnfollow}")
+    public ResponseEntity unfollowUser(@PathVariable Integer userId, @PathVariable Integer userIdToUnfollow){
+        return this.userService.unfollowUser(userId, userIdToUnfollow);
+    }
 }

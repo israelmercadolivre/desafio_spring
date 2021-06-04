@@ -52,15 +52,6 @@ public class UserService {
         return this.userToFollowedListDto(user);
     }
 
-
-    private Optional findByIdAndType(Integer id, Type type) {
-        Optional clientOptional = this.userRepository.findByIdAndType(id, type);
-        if (clientOptional.isEmpty()) {
-            throw new UserDoesNotExistingException(String.format(USER_NOTFOUND, id, type.name()));
-        }
-        return clientOptional;
-    }
-
     public User findById(Integer id) {
         return this.userRepository.findById(id)
                 .orElseThrow(
@@ -79,4 +70,11 @@ public class UserService {
         return followedListDto;
     }
 
+    public ResponseEntity unfollowUser(Integer userId, Integer userIdToUnfollow) {
+        this.verifyUserFollow(userId, userIdToUnfollow);
+        SellerFollow sellerFollow = this.sellerFollowService.findByUserIdAndSellerId(userId, userIdToUnfollow);
+
+        this.sellerFollowService.remove(sellerFollow);
+        return ResponseEntity.ok().build();
+    }
 }
