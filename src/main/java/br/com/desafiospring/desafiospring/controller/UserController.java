@@ -1,8 +1,9 @@
 package br.com.desafiospring.desafiospring.controller;
 
-import br.com.desafiospring.desafiospring.dto.followed.FollowedListDto;
-import br.com.desafiospring.desafiospring.dto.follower.FollowerCountDto;
-import br.com.desafiospring.desafiospring.dto.follower.FollowerListDto;
+import br.com.desafiospring.desafiospring.dto.user.followed.FollowedListDto;
+import br.com.desafiospring.desafiospring.dto.user.follower.FollowerCountDto;
+import br.com.desafiospring.desafiospring.dto.user.follower.FollowerListDto;
+import br.com.desafiospring.desafiospring.service.user.SellerService;
 import br.com.desafiospring.desafiospring.service.user.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +13,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
     private UserService userService;
+    private SellerService sellerService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, SellerService sellerService) {
         this.userService = userService;
+        this.sellerService = sellerService;
     }
+
 
     //US 001
     @PostMapping("/{userId}/follow/{userIdToFollow}")
@@ -26,14 +30,14 @@ public class UserController {
     //US 002
     @GetMapping("/{userId}/followers/count")
     public ResponseEntity<FollowerCountDto> countFollowers(@PathVariable Integer userId){
-        FollowerCountDto followerCountDto =  this.userService.countFollowers(userId);
+        FollowerCountDto followerCountDto =  this.sellerService.countFollowers(userId);
         return ResponseEntity.ok().body(followerCountDto);
     }
 
     //US 003
     @GetMapping("/{userId}/followers/list")
     public ResponseEntity<FollowerListDto> listFollowers(@PathVariable Integer userId){
-        FollowerListDto followerListDto =  this.userService.listFollowers(userId);
+        FollowerListDto followerListDto =  this.sellerService.listFollowers(userId);
         return ResponseEntity.ok().body(followerListDto);
     }
 

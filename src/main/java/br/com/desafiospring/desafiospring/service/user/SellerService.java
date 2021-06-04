@@ -1,8 +1,8 @@
 package br.com.desafiospring.desafiospring.service.user;
 
-import br.com.desafiospring.desafiospring.dto.follower.FollowerCountDto;
-import br.com.desafiospring.desafiospring.dto.follower.FollowerDto;
-import br.com.desafiospring.desafiospring.dto.follower.FollowerListDto;
+import br.com.desafiospring.desafiospring.dto.user.follower.FollowerCountDto;
+import br.com.desafiospring.desafiospring.dto.user.follower.FollowerDto;
+import br.com.desafiospring.desafiospring.dto.user.follower.FollowerListDto;
 import br.com.desafiospring.desafiospring.exception.user.UserDoesNotExistingException;
 import br.com.desafiospring.desafiospring.model.user.Seller;
 import br.com.desafiospring.desafiospring.model.user.SellerFollow;
@@ -31,6 +31,16 @@ public class SellerService {
         followerCountDto.setFollowers_count(seller.getFollowers().size());
 
         return followerCountDto;
+    }
+
+    public FollowerCountDto countFollowers(Integer sellerId) {
+        Seller seller = this.findById(sellerId);
+        return this.sellerToFollowerCountDto(seller);
+    }
+
+    public FollowerListDto listFollowers(Integer sellerId){
+        Seller seller = this.findById(sellerId);
+        return this.sellerToFollowerListDto(seller);
     }
 
     public FollowerListDto sellerToFollowerListDto(Seller seller) {

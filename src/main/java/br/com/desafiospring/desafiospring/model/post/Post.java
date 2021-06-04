@@ -23,7 +23,7 @@ public class Post {
     private Boolean hasPromo;
     private BigDecimal discount;
     @OneToOne(mappedBy = "post")
-    private Product products;
+    private Product product;
 
     public Post() {
         this.hasPromo = false;
