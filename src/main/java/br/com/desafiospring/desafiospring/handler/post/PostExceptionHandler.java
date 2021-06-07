@@ -1,11 +1,10 @@
 package br.com.desafiospring.desafiospring.handler.post;
 
-import br.com.desafiospring.desafiospring.exception.InvalidOrderException;
+import br.com.desafiospring.desafiospring.exception.post.InvalidOrderException;
 import br.com.desafiospring.desafiospring.exception.MessageError;
 import br.com.desafiospring.desafiospring.exception.post.InvalidValuesPostPromoException;
 import br.com.desafiospring.desafiospring.exception.post.PostAlreadyExistException;
 import br.com.desafiospring.desafiospring.exception.post.PostException;
-import br.com.desafiospring.desafiospring.exception.product.ProductAlreadyExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

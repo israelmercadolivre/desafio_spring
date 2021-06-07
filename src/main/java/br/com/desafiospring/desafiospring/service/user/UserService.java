@@ -9,8 +9,6 @@ import br.com.desafiospring.desafiospring.repository.user.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class UserService {
     private UserRepository userRepository;
@@ -42,7 +40,7 @@ public class UserService {
     }
 
     private void verifyUserFollow(Integer userId, Integer userIdToFollow) {
-        if(userId == userIdToFollow){
+        if(userId.equals(userIdToFollow)){
             throw new InvalidFollowUserException(String.format(INVALID_FOLLOW_USER, userId, userIdToFollow));
         }
     }

@@ -6,8 +6,6 @@ import br.com.desafiospring.desafiospring.model.user.SellerFollow;
 import br.com.desafiospring.desafiospring.model.user.SellerFollowKey;
 import br.com.desafiospring.desafiospring.repository.user.SellerFollowRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.Optional;
 
 

@@ -1,6 +1,6 @@
 package br.com.desafiospring.desafiospring.service.post.order;
 
-import br.com.desafiospring.desafiospring.exception.InvalidOrderException;
+import br.com.desafiospring.desafiospring.exception.post.InvalidOrderException;
 
 import java.util.Arrays;
 import java.util.Comparator;

@@ -28,7 +28,7 @@ public class ProductController {
         return this.productService.createProduct(postDto);
     }
 
-    //US006
+    //US006, US008 AND US009
     @GetMapping("/followed/{userId}/list")
     public ResponseEntity<SellerPostsDto> getListPostByUser(@PathVariable Integer userId, @PathParam("order") String order){
         SellerPostsDto sellerPostsDto =  this.postService.getListPostByUser(userId, order);

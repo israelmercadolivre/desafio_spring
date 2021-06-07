@@ -20,7 +20,6 @@ public class UserController {
         this.sellerService = sellerService;
     }
 
-
     //US 001
     @PostMapping("/{userId}/follow/{userIdToFollow}")
     public ResponseEntity followUser(@PathVariable Integer userId, @PathVariable Integer userIdToFollow){
