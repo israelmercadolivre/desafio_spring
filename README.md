@@ -24,4 +24,5 @@ _obs: Was inserted some users on application, access the database to know more_
 
 ### **Test with Postman**
 
-Was exported the collection to test the application. The name of collection is _Desafio Spring.postman_collection.json_
+Was exported the collection to test the application. The name of file is _Desafio Spring.postman_collection.json_
+-   To test, just import this file on Postman
