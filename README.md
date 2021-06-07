@@ -12,16 +12,16 @@ Open the package of project on any terminal and run:
 1- After execute application, with your browser, access the page:
 _http://localhost:8080/h2-console_
 
-2- Credentials of data base:
+2- Credentials of database:
         
         -   Saved Settings: Generic H2 (Embedded)
         -   Setting Name: Generic H2 (Embedded)
         -   JDBC URL: jdbc:h2:mem:desafio
         -   User Name:	root
         -   Password :
-
+_obs: Was inserted some users on application, access the database to know more_
 
 
 ### **Test with Postman**
 
-Was exported the collection to test the application. The name of collection is _Desafio Spring.postman_collection.json_ 
+Was exported the collection to test the application. The name of collection is _Desafio Spring.postman_collection.json_
