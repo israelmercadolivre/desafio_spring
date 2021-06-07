@@ -1,5 +1,6 @@
 package br.com.desafiospring.desafiospring.dto.user.followed;
 
+import br.com.desafiospring.desafiospring.dto.user.FollowDto;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -9,13 +10,13 @@ import java.util.List;
 public class FollowedListDto {
     private Integer userId;
     private String userName;
-    private List<FollowedDto> followed;
+    private List<FollowDto> followed;
 
     public FollowedListDto() {
         this.followed = new ArrayList<>();
     }
 
-    public void setFollowed(FollowedDto followedDto){
-        this.followed.add(followedDto);
+    public void setFollowed(FollowDto followDto){
+        this.followed.add(followDto);
     }
 }

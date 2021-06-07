@@ -1,4 +1,4 @@
-package br.com.desafiospring.desafiospring.exception.post;
+package br.com.desafiospring.desafiospring.exception.order;
 
 public class InvalidOrderException extends RuntimeException{
     public InvalidOrderException(String message) {

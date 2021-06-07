@@ -1,20 +1,22 @@
-package br.com.desafiospring.desafiospring.service.post.order;
+package br.com.desafiospring.desafiospring.service.user.order;
 
+import br.com.desafiospring.desafiospring.dto.user.FollowDto;
 import br.com.desafiospring.desafiospring.exception.order.InvalidOrderException;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
 public enum Order {
-    DATE_ASC("date_asc", new DateAscComparator()),
-    DATE_DESC("date_desc", new DateDescComparator());
+    NAME_ASC("name_asc", new NameAscComparator()),
+    NAME_DESC("name_desc", new NameDescComparator());
+
 
     private String name;
-    private Comparator comparator;
+    private final Comparator<FollowDto> comparator;
     private static final String ORDER_IS_NOT_VALID = "Order [%s] is not valid";
 
 
-    Order(String name, Comparator comparator) {
+    Order(String name, Comparator<FollowDto> comparator) {
         this.name = name;
         this.comparator = comparator;
     }
@@ -30,7 +32,7 @@ public enum Order {
         return name;
     }
 
-    public Comparator getComparator(){
+    public Comparator<FollowDto> getComparator(){
         return comparator;
     }
 }

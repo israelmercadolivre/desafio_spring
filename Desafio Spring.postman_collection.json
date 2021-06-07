@@ -27,7 +27,7 @@
 			"response": []
 		},
 		{
-			"name": "Get followers count - US002",
+			"name": "Get followers count - US002 (Order US008)",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -36,7 +36,7 @@
 			"response": []
 		},
 		{
-			"name": "Get followers list - US003",
+			"name": "Get followers list - US003 (Order US008)",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -94,7 +94,7 @@
 			"response": []
 		},
 		{
-			"name": "List all Posts - US006 (Order US008 and US009)",
+			"name": "List all Posts - US006 (Order US009)",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},

@@ -1,13 +1,16 @@
 package br.com.desafiospring.desafiospring.service.user;
 
+import br.com.desafiospring.desafiospring.dto.user.FollowDto;
 import br.com.desafiospring.desafiospring.dto.user.follower.FollowerCountDto;
-import br.com.desafiospring.desafiospring.dto.user.follower.FollowerDto;
 import br.com.desafiospring.desafiospring.dto.user.follower.FollowerListDto;
 import br.com.desafiospring.desafiospring.exception.user.UserDoesNotExistingException;
 import br.com.desafiospring.desafiospring.model.user.Seller;
 import br.com.desafiospring.desafiospring.model.user.SellerFollow;
 import br.com.desafiospring.desafiospring.repository.user.SellerRepository;
+import br.com.desafiospring.desafiospring.service.user.order.Order;
 import org.springframework.stereotype.Service;
+
+import java.util.Comparator;
 
 @Service
 public class SellerService {
@@ -38,9 +41,16 @@ public class SellerService {
         return this.sellerToFollowerCountDto(seller);
     }
 
-    public FollowerListDto listFollowers(Integer sellerId){
+    public FollowerListDto listFollowers(Integer sellerId, String orderName){
         Seller seller = this.findById(sellerId);
-        return this.sellerToFollowerListDto(seller);
+        FollowerListDto followerListDto =  this.sellerToFollowerListDto(seller);
+        if (orderName != null) {
+            Order order = Order.getOrderByName(orderName);
+            Comparator comparator = order.getComparator();
+            followerListDto.getFollowers().sort(comparator);
+        }
+
+        return followerListDto;
     }
 
     public FollowerListDto sellerToFollowerListDto(Seller seller) {
@@ -50,7 +60,7 @@ public class SellerService {
         seller.getFollowers()
                 .stream()
                 .map(SellerFollow::getUser)
-                .forEach(user -> followerListDto.setFollowers(new FollowerDto(user.getId(), user.getName())));
+                .forEach(user -> followerListDto.setFollowers(new FollowDto(user.getId(), user.getName())));
         return followerListDto;
     }
 }
