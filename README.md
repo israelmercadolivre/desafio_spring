@@ -1,10 +1,7 @@
 ### **Execute application**
 
 Open the package of project on any terminal and run:
-- mvn clean install
-- cd target
-- java -jar desafiospring-0.0.1-SNAPSHOT.jar
-
+- mvn spring-boot:run
 
 
 ### **Data base**
@@ -19,8 +16,9 @@ _http://localhost:8080/h2-console_
         -   JDBC URL: jdbc:h2:mem:desafio
         -   User Name:	root
         -   Password :
-_obs: Was inserted some users on application, access the database to know more_
-
+_obs: Was inserted some users(Client and Seller) on application, access the database to know more_
+-   User(Client) : ids(1,2,3)
+-   Seller       : ids(4,5,6)
 
 ### **Test with Postman**
 
