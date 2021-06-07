@@ -6,5 +6,5 @@ import lombok.Data;
 public class ProductPromoCountDto {
     private Integer userId;
     private String userName;
-    private Long promoproducts_count;
+    private Integer promoproducts_count;
 }

@@ -1,6 +1,7 @@
 package br.com.desafiospring.desafiospring.controller;
 
 import br.com.desafiospring.desafiospring.dto.post.PostDto;
+import br.com.desafiospring.desafiospring.dto.post.SellerPostsDto;
 import br.com.desafiospring.desafiospring.dto.product.ProductPromoCountDto;
 import br.com.desafiospring.desafiospring.service.post.PostService;
 import br.com.desafiospring.desafiospring.service.product.ProductService;
@@ -29,8 +30,10 @@ public class ProductController {
 
     //US006
     @GetMapping("/followed/{userId}/list")
-    public ResponseEntity getListPostByUser(@PathVariable Integer userId, @PathParam("order") String order){
-       return this.postService.getListPostByUser(userId, order);
+    public ResponseEntity<SellerPostsDto> getListPostByUser(@PathVariable Integer userId, @PathParam("order") String order){
+        SellerPostsDto sellerPostsDto =  this.postService.getListPostByUser(userId, order);
+        return ResponseEntity.ok().body(sellerPostsDto);
+
     }
 
     //US0010
@@ -41,9 +44,16 @@ public class ProductController {
 
     //US011
     @GetMapping("/{userId}/countPromo/")
-    public ResponseEntity<ProductPromoCountDto> getListProductPromo(@PathVariable Integer userId){
+    public ResponseEntity<ProductPromoCountDto> getCountProductPromo(@PathVariable Integer userId){
         ProductPromoCountDto dto = this.productService.getCountProductPromo(userId);
         return new ResponseEntity<>(dto, HttpStatus.OK);
 
+    }
+
+    //US012
+    @GetMapping("/{userId}/list/")
+    public ResponseEntity<SellerPostsDto> getListProductPromo(@PathVariable Integer userId){
+        SellerPostsDto sellerPostsDto = this.postService.getListPostPromoByUser(userId);
+        return ResponseEntity.ok().body(sellerPostsDto);
     }
 }

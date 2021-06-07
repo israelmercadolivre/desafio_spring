@@ -10,7 +10,6 @@ import br.com.desafiospring.desafiospring.model.user.Seller;
 import br.com.desafiospring.desafiospring.repository.post.PostRepository;
 import br.com.desafiospring.desafiospring.service.post.order.Order;
 import br.com.desafiospring.desafiospring.service.user.SellerService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -51,12 +50,11 @@ public class PostService {
         }
     }
 
-    public ResponseEntity<SellerPostsDto> getListPostByUser(Integer userId, String orderName) {
+    public SellerPostsDto getListPostByUser(Integer userId, String orderName) {
         Seller seller = this.sellerService.findById(userId);
         List<Post> posts = getPostsTwoWeekAgo(seller.getPosts());
 
-        List<PostDto> postsDto = new ArrayList<>();
-        posts.stream().forEach(post -> postsDto.add(this.postMapper.postToPostDto(post)));
+        List<PostDto> postsDto = addPostOnListPostDto(posts);
 
         SellerPostsDto sellerPostsDto = new SellerPostsDto();
         sellerPostsDto.setUserId(userId);
@@ -72,7 +70,7 @@ public class PostService {
         }
 
         sellerPostsDto.getPosts().sort(comparator);
-        return ResponseEntity.ok().body(sellerPostsDto);
+        return sellerPostsDto;
     }
 
     private List<Post> getPostsTwoWeekAgo(List<Post> posts) {
@@ -90,5 +88,32 @@ public class PostService {
         if ((postDto.getHasPromo() == null || postDto.getDiscount() == null) ||
                 (!postDto.getHasPromo() || postDto.getDiscount().doubleValue() == 0)) throw new
                 InvalidValuesPostPromoException((WITHOUT_PROMO));
+    }
+
+    public SellerPostsDto getListPostPromoByUser(Integer userId) {
+        Seller seller = this.sellerService.findById(userId);
+        List<Post> posts = getPostPromo(seller);
+
+        List<PostDto> postsDto = addPostOnListPostDto(posts);
+
+        SellerPostsDto sellerPostsDto = new SellerPostsDto();
+        sellerPostsDto.setUserId(userId);
+        sellerPostsDto.setUserName(seller.getName());
+        sellerPostsDto.setPosts(postsDto);
+
+        return sellerPostsDto;
+    }
+
+    private List<PostDto> addPostOnListPostDto(List<Post> posts) {
+        List<PostDto> postsDto = new ArrayList<>();
+        posts.stream().forEach(post -> postsDto.add(this.postMapper.postToPostDto(post)));
+        return postsDto;
+    }
+
+    public List<Post> getPostPromo(Seller seller) {
+        return seller.getPosts().stream()
+                .filter(post -> post.getHasPromo() != null)
+                .filter(Post::getHasPromo)
+                .collect(Collectors.toList());
     }
 }

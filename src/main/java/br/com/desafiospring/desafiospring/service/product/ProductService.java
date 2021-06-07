@@ -60,10 +60,7 @@ public class ProductService {
         ProductPromoCountDto dto = new ProductPromoCountDto();
         dto.setUserId(seller.getId());
         dto.setUserName(seller.getName());
-        Long countProductPromo = seller.getPosts().stream()
-                .filter(post -> post.getHasPromo() != null)
-                .filter(Post::getHasPromo)
-                .count();
+        Integer countProductPromo = this.postService.getPostPromo(seller).size();
         dto.setPromoproducts_count(countProductPromo);
 
         return dto;
